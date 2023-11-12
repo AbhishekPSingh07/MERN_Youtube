@@ -90,12 +90,12 @@ export const subVideos = async(req,res,next) => {
     try{
         const user = await User.findById(req.user.id)
         const subbedChannels = user.subscribedUsers
-        const list = Promise.all(
-            subbedChannels.map(channelId=>{
-                return Video.findById({userId:channelId})
+        const list = await Promise.all(
+            subbedChannels.map((channelId)=>{
+                return Video.find({userId:channelId})
             })
         )
-        res.status(200).json(list)
+        res.status(200).json(list.flat().sort((a,b)=>b.createdAt- a.createdAt)) //.flat() -> To avoid nesting of the response json
     }catch(err){
         next(err);
     }
@@ -110,4 +110,25 @@ export const trendVideos = async(req,res,next) => {
         next(err);
     }
 }
+//To get Video by Tag
+export const getByTag = async( req,res,next)=>{
+    const tags = req.query.tags.split(",")
+    console.log(tags);
+    try{
+        const video = await Video.find({tags: {$in:tags}}).limit(20)
+        res.status(200).json(video)
+    }catch(err){
+        next(err);
+    }
+}
 
+//Search method
+export const search = async( req,res,next)=>{
+    const query = req.query.q
+    try{
+        const video = await Video.find({title:{$regex : query, $options: "i"}}).limit(20) //regex is used for serch queries and option i denotes that that it should be case insensitive.
+        res.status(200).json(video)
+    }catch(err){
+        next(err);
+    }
+}
