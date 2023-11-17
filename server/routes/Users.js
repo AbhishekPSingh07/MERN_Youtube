@@ -21,10 +21,10 @@ router.put("/sub/:id",verifyTokens,subscribe);
 router.put("/unsub/:id",verifyTokens,unsubscribe);
 
 //like a Video
-router.put("/like/:id",verifyTokens,like);
+router.put("/like/:videoId",verifyTokens,like);
 
 //dislike a video
-router.put("/dislike/:id",verifyTokens,dislike);
+router.put("/dislike/:videoId",verifyTokens,dislike);
 
 //add a comment to a video
 
