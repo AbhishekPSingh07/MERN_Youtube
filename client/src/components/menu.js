@@ -8,6 +8,7 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import LibraryMusicOutlinedIcon from "@mui/icons-material/LibraryMusicOutlined";
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SportsBasketballOutlinedIcon from "@mui/icons-material/SportsBasketballOutlined";
 import MovieOutlinedIcon from "@mui/icons-material/MovieOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
@@ -18,11 +19,13 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 
 const Container = styled.div`
-    flex: 1;
-    background-color: #202020;
-    color: #ffffff;
+    flex: 1.2;
+    background-color: ${({theme})=>theme.bgLighter};
+    color: ${({theme})=>theme.text};
     height: 100vh;
     overflow: hidden;
+    position: sticky;
+    top:0;
 `;
 
 const Wrapper = styled.div`
@@ -39,10 +42,16 @@ const Logo = styled.div`
 `;
 const Img = styled.img`
     height: 25px;
-`
+`;
+const Title = styled.h2`
+  font-size:14px;
+  font-weight: 500;
+  color:#aaaaaa;
+  margin-bottom:20px;
+`;
 const Hr = styled.hr`
     margin: 15px 0px;
-    border: 0.5px solid #373737;
+    border: 0.5px solid ${({theme})=>theme.soft};
 `
 const Item = styled.div`
     display: flex;
@@ -50,20 +59,25 @@ const Item = styled.div`
     cursor: pointer;
     gap:20px;
     padding:7.5px 0px;
-`
+`;
 const Login = styled.div`
 
-`
+`;
 const Button = styled.button`
+    display: flex;
+    align-items:center;
     padding:5px 15px;
     background-color: transparent;
     border: 1px solid #3ea6ff;
     color: #3ea6ff;
     border-radius:3px;
     font-weight:500;
+    margin-top:10px;
+    cursor: pointer;
+    gap: 10px;
 `;
 
-const menu = () => {
+const menu = (props) => {
   return (
     <Container>
       <Wrapper>
@@ -95,9 +109,10 @@ const menu = () => {
         <Hr/>
         <Login>
             Sign in to like videos ,comment and subscribe.
-            <Button>SIGN IN</Button>
+            <Button><AccountCircleOutlinedIcon/>SIGN IN</Button>
         </Login>
         <Hr/>
+        <Title>BEST OF TUBENET</Title>
         <Item>
           <LibraryMusicOutlinedIcon />
           Music
@@ -135,7 +150,7 @@ const menu = () => {
           <HelpOutlineOutlinedIcon />
           Help
         </Item>
-        <Item>
+        <Item onClick={()=>props.setDarkMode(!props.darkMode)}>
             <SettingsBrightnessOutlinedIcon/>
             Light Mode
         </Item>
