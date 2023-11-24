@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 const Container = styled.div`
     width: 342px;
@@ -45,17 +46,19 @@ const ChannelImage = styled.img`
 `;
 const Card = () => {
   return (
-    <Container>
-      <Image src="https://i.ytimg.com/vi/HeZO_LcQALI/maxresdefault.jpg"/>
-      <Details>
-        <ChannelImage src="https://mir-s3-cdn-cf.behance.net/projects/404/a2c2a9181643811.Y3JvcCwyMzAxLDE4MDAsMjUwLDA.jpg"/>
-        <Texts>
-            <Title>Title</Title>
-            <ChannelName>Channel name</ChannelName>
-            <Info>Info</Info>
-        </Texts>
-      </Details>
-    </Container>
+    <Link to="/video/test" style={{textDecoration:"none"}}>
+      <Container>
+        <Image src="https://i.ytimg.com/vi/HeZO_LcQALI/maxresdefault.jpg"/>
+        <Details>
+          <ChannelImage src="https://mir-s3-cdn-cf.behance.net/projects/404/a2c2a9181643811.Y3JvcCwyMzAxLDE4MDAsMjUwLDA.jpg"/>
+          <Texts>
+              <Title>Title</Title>
+              <ChannelName>Channel name</ChannelName>
+              <Info>Info</Info>
+          </Texts>
+        </Details>
+      </Container>
+    </Link>
   )
 }
 
