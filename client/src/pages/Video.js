@@ -4,7 +4,9 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import SendIcon from '@mui/icons-material/Send';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
-import { useState } from 'react';
+import { useState,useEffect,useRef } from 'react';
+import Comments from '../components/Comments';
+import Card from '../components/Card';
 const Container = styled.div`
   display: flex;
   gap: 24px;
@@ -45,39 +47,20 @@ const Title = styled.h1`
 `;
 const Details = styled.div`
   display: block;
-  width: 100%;
   margin-top: 15px;
   background-color: ${({theme})=> theme.bgDetails};
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   border-radius: 20px;
-  
-`;
-const Description = styled.p`
-  margin-top: 5px;
-  color: ${({theme})=>theme.text};
-  font-size: 15px;
-  line-height: 1.15;
-  text-align: justify;
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add ellipsis for truncated text */
-  max-height: ${(props) => (props.expanded ? 'none' : '50px')}; /* Set max-height for collapsed text */
-`;
-const ToggleButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  font-style: italic;
-  color: ${({theme})=>theme.text};
+  margion-right: 10px;
 `;
 
+
 const Info = styled.span`
-  font-size:14px;
-  font-weight:400;
-  color: ${({theme})=>theme.textSoft};
+    font-size:14px;
+    font-weight:400;
+    color: ${({theme})=>theme.textSoft};
 `;
 const Buttons = styled.div`
   display: flex;
@@ -97,18 +80,46 @@ const Button = styled.div`
 const Texts = styled.div`
 
 `;
+const Description = styled.p`
+  margin-top: 5px;
+  color: ${({theme})=>theme.text};
+  font-size: 15px;
+  line-height: 1.15;
+  text-align: justify;
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for truncated text */
+  max-height: ${(props) => (props.expanded ? 'none' : '50px')}; /* Set max-height for collapsed text */
+`;
+const ToggleButton = styled.button`
+  display: ${(props) => (props.showButton ? 'inline-block' : 'none')};
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: ${({ theme }) => theme.text};
+`;
 const TruncatedDescription = ({ children }) => {
   const [expanded, setExpanded] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const descriptionRef = useRef(null);
 
-  const toggleReadMore = () => {
-    setExpanded(!expanded);
-  };
+  useEffect(() => {
+    const element = descriptionRef.current;
+
+    if (element) {
+      setShowButton(element.scrollHeight > element.clientHeight || expanded);
+    }
+  }, [children, expanded]);
 
   return (
     <>
-      <Description expanded={expanded}>{children}</Description>
-      <ToggleButton onClick={toggleReadMore}>
-        {expanded ? 'Read Less' : '...Read More'}
+      <Description expanded={expanded} ref={descriptionRef}>
+        {children}
+      </Description>
+      <ToggleButton showButton={showButton} onClick={() => setExpanded(!expanded)}>
+        {expanded ? 'Read Less' : 'Read More'}
       </ToggleButton>
     </>
   );
@@ -164,12 +175,25 @@ const Video = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </TruncatedDescription>
         </Details>
+        <Hr/>
+        <Comments>
+
+        </Comments>
       </Content>
       <Recommendation>
-        Recommendation
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
+        <Card type="sm"/>
       </Recommendation>
     </Container>
-  )
+    )
 }
 
 export default Video

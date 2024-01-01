@@ -24,9 +24,10 @@ const Container = styled.div`
     background-color: ${({theme})=>theme.bgLighter};
     color: ${({theme})=>theme.text};
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
     position: sticky;
     top:0;
+    
 `;
 
 const Wrapper = styled.div`
@@ -60,6 +61,9 @@ const Item = styled.div`
     cursor: pointer;
     gap:20px;
     padding:7.5px 0px;
+    &:hover{
+      background-color:${({theme})=>theme.soft}
+    }
 `;
 const Login = styled.div`
 
@@ -112,7 +116,9 @@ const menu = (props) => {
         <Hr/>
         <Login>
             Sign in to like videos ,comment and subscribe.
+            <Link to="signin" style={{textDecoration:"none"}}>
             <Button><AccountCircleOutlinedIcon/>SIGN IN</Button>
+            </Link>
         </Login>
         <Hr/>
         <Title>BEST OF TUBENET</Title>

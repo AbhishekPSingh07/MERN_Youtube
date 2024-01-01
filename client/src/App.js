@@ -6,17 +6,23 @@ import { useState } from "react";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Home from "./pages/Home.js";
 import Video from "./pages/Video.js";
+import SignIn from "./pages/SignIn.js";
 
 const Container = styled.div`
   display: flex;
+  background-size : cover;
+  
+
 `;
 const Main = styled.div`
   flex: 7;
   background-color: ${({theme})=>theme.bg};
   color: ${({theme})=>theme.text};
+  
+
 `;
 const Wrapper = styled.div`
-  padding: 17px 60px;
+  padding: 17px 30px;
 `;
 
 
@@ -33,6 +39,7 @@ function App() {
               <Routes>
                 <Route path="/">
                   <Route index element={<Home/>}/>
+                  <Route path="signin" element={<SignIn/>}/>
                   <Route path="video">
                     <Route path = ":id" element={<Video/>}/>
                   </Route>
