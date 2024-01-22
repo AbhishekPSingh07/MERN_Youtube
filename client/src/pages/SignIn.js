@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components"
+import axios from 'axios';
 
 const Container =styled.div`
     display: flex;
@@ -30,6 +31,7 @@ const Input = styled.input`
     padding: 10px;
     width: 100%;
     background-color : transparent;
+    color : ${({theme})=>theme.text}
 `
 const Button = styled.button`
     border-radius: 3px;
@@ -52,20 +54,33 @@ const Link = styled.span`
     margin-left: 25px;
 `
 const SignIn = () => {
+    const [name,setName] = useState("");
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+
+    const handleLogin = async(e)=>{
+        e.preventDefault();
+        try{
+            const res = await axios.post("http://localhost:8800/api/auth/signin",{name,password});
+            console.log(res.data)
+        }catch(err){
+
+        }
+    }
   return (
     <Container>
         <Wrapper>
             <Title>Sign in</Title>
             <SubTitle>to continue to TubeNet</SubTitle>
-            <Input placeholder='username'></Input>
-            <Input placeholder='password' type='password'></Input>
-            <Button>Sign in</Button>
+            <Input placeholder='username' onChange={e=>setName(e.target.value)}></Input>
+            <Input placeholder='password' type='password' onChange={e=>setPassword(e.target.value)}></Input>
+            <Button onClick={handleLogin} >Sign in</Button>
             <Title>Or</Title>
             <SubTitle>to continue to TubeNet</SubTitle>
-            <Input placeholder='username'></Input>
-            <Input placeholder='email'></Input>
-            <Input placeholder='password' type='password'></Input>
-            <Button>Sign up</Button>
+            <Input placeholder='username' onChange={e=>setName(e.target.value)}></Input>
+            <Input placeholder='email' onChange={e=>setEmail(e.target.value)}></Input>
+            <Input placeholder='password' type='password' onChange={e=>setPassword(e.target.value)}></Input>
+            <Button >Sign up</Button>
         </Wrapper>
         <More>
             English(USA)

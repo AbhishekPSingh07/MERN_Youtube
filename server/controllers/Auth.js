@@ -8,6 +8,10 @@ import jwt from "jsonwebtoken"
 //Sign Up Function
 export const signUp = async(req,res,next)=>{
     try{
+        const username = req.body.name;
+        if(User.findOne({username})){
+            next(createError(401,"User Already Exists"));
+        }
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt)
         const newUser = new User({...req.body,password:hash});
