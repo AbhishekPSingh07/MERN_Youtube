@@ -1,5 +1,5 @@
 import styled, { ThemeProvider } from "styled-components"
-import Menu from "./components/menu";
+import Menu from './components/Menu.js'
 import Navbar from "./components/Navbar";
 import { darkTheme, lightTheme } from "./utils/Theme";
 import { useState } from "react";
@@ -28,6 +28,7 @@ const Wrapper = styled.div`
 
 function App() {
   const [darkMode,setDarkMode] = useState(true);
+  
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Container>
