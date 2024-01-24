@@ -3,6 +3,9 @@ import styled from "styled-components"
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
+import { auth , provider } from '../firebase';
+import { signInWithPopup } from 'firebase/auth';
+
 const Container =styled.div`
     display: flex;
     flex-direction: column;
@@ -80,6 +83,8 @@ const SignIn = () => {
             <Input placeholder='password' type='password' onChange={e=>setPassword(e.target.value)}></Input>
             <Button onClick={handleLogin} >Sign in</Button>
             <Title>Or</Title>
+            <Button onClick={SignInWithGoogle}>SignIn with Google</Button>
+            <Title>Or</Title>
             <SubTitle>to continue to TubeNet</SubTitle>
             <Input placeholder='username' onChange={e=>setName(e.target.value)}></Input>
             <Input placeholder='email' onChange={e=>setEmail(e.target.value)}></Input>
@@ -98,4 +103,22 @@ const SignIn = () => {
   )
 }
 
+const SignInWithGoogle = async()=>{
+    const dispatch = useDispatch()
+    dispatch(loginStart());
+    signInWithPopup(auth , provider)
+    .then((result)=>{
+        axios.post("http://localhost:8800/auth/signin",{
+            name: result.user.displayName,
+            email:result.user.email,
+            img:result.user.photoURL
+        }).then((res)=>{
+            dispatch(loginSuccess(res.data));
+        })
+
+    })
+    .catch((err)=>{
+        dispatch.loginFailure();
+    })
+}
 export default SignIn
