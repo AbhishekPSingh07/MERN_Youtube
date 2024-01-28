@@ -4,7 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import {getAuth ,GoogleAuthProvider} from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "process.env.REACT_APP_FIREBASE_API_KEY",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "auth-bfa9f.firebaseapp.com",
   projectId: "auth-bfa9f",
   storageBucket: "auth-bfa9f.appspot.com",

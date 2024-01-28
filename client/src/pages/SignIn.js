@@ -73,6 +73,27 @@ const SignIn = () => {
         }catch(err){
             dispatch(loginFailure())
         }
+    };
+
+    const signInWithGoogle = async()=>{
+        dispatch(loginStart());
+        signInWithPopup(auth , provider)
+        .then((result)=>{
+            console.log(result);
+            axios.post("http://localhost:8800/api/auth/oAuth",{
+                name : result.user.displayName,
+                email : result.user.email,
+                password : result.user.accessToken,
+                img : result.user.photoURL
+            }).then((res)=>{
+                console.log(res.data);
+                dispatch(loginSuccess(res.data));
+            })
+    
+        })
+        .catch((err)=>{
+            dispatch.loginFailure();
+        })
     }
   return (
     <Container>
@@ -83,7 +104,7 @@ const SignIn = () => {
             <Input placeholder='password' type='password' onChange={e=>setPassword(e.target.value)}></Input>
             <Button onClick={handleLogin} >Sign in</Button>
             <Title>Or</Title>
-            <Button onClick={SignInWithGoogle}>SignIn with Google</Button>
+            <Button onClick={signInWithGoogle}>SignIn with Google</Button>
             <Title>Or</Title>
             <SubTitle>to continue to TubeNet</SubTitle>
             <Input placeholder='username' onChange={e=>setName(e.target.value)}></Input>
@@ -103,22 +124,5 @@ const SignIn = () => {
   )
 }
 
-const SignInWithGoogle = async()=>{
-    const dispatch = useDispatch()
-    dispatch(loginStart());
-    signInWithPopup(auth , provider)
-    .then((result)=>{
-        axios.post("http://localhost:8800/auth/signin",{
-            name: result.user.displayName,
-            email:result.user.email,
-            img:result.user.photoURL
-        }).then((res)=>{
-            dispatch(loginSuccess(res.data));
-        })
 
-    })
-    .catch((err)=>{
-        dispatch.loginFailure();
-    })
-}
 export default SignIn
