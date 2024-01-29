@@ -53,7 +53,7 @@ const Button = styled.button`
     cursor: pointer;
     gap: 10px;
 `;
-const Avatar = styled.div`
+const Avatar = styled.img`
   width : 32px;
   height : 32px;
   border-radius: 50%;
@@ -79,7 +79,7 @@ const Navbar = () => {
         {currentUser ? (
           <User>
             <VideoCallOutlinedIcon/>
-            <Avatar/>
+            <Avatar src={currentUser.img}/>
             {currentUser.name}
           </User>
         ):

@@ -5,6 +5,7 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import SendIcon from '@mui/icons-material/Send';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import { useState,useEffect,useRef } from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 import Comments from '../components/Comments';
 import Card from '../components/Card';
 const Container = styled.div`
@@ -139,6 +140,10 @@ const Subscribe =styled.div`
   color: white;
 `;
 const Video = () => {
+
+  const { currentUser } = useSelector((state)=> state.user);
+  const dispatch = useDispatch();
+  
   return (
     <Container>
       <Content>
